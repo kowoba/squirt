@@ -162,7 +162,7 @@ backup_backupList(dir_entry_list_t* list)
 
       if (skip) {
 	if (skipFile) {
-	  printf("! %c[1m%s == SKIPPED == %c[0m\n", 27, path, 27); // utf-8 no entry bold
+	  printf("! %c[1m%s ***SKIPPED*** %c[0m\n", 27, path, 27); // utf-8 no entry bold
 	} else {
 	  printf("! %s\n", path); // utf-8 tick
 	}
@@ -218,7 +218,7 @@ backup_backupList(dir_entry_list_t* list)
 	exall_saveExAllData(entry, path);
 	free((void*)path);
       } else {
-	  printf("! %c[1m%s == SKIPPED == %c[0m\n", 27, path, 27); // utf-8 no entry bold
+	  printf("! %c[1m%s ***SKIPPED*** %c[0m\n", 27, path, 27); // utf-8 no entry bold
 	free((void*)path);
       }
 
