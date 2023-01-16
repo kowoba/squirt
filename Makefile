@@ -21,6 +21,7 @@ endif
 SQUIRT_OBJS=$(addprefix build/obj/, $(SQUIRT_SRCS:.c=.o))
 HOST_CLIENT_APPS=$(addprefix build/, $(CLIENT_APPS))
 AMIGA_APPS=build/amiga/squirtd build/amiga/ssum build/amiga/skill build/amiga/sps
+AMIGA_APPS=
 
 all: $(HOST_CLIENT_APPS) $(AMIGA_APPS)
 

@@ -89,7 +89,7 @@ backup_pruneFiles(const char* filename, void* data)
     char exFilename[PATH_MAX];
     snprintf(exFilename, sizeof(exFilename), "%s%s", SQUIRT_EXALL_INFO_DIR_NAME, filename);
     char* path = backup_fullPath(filename);
-    printf("%c[31m%s \xF0\x9F\x92\x80\xF0\x9F\x92\x80\xF0\x9F\x92\x80 REMOVED \xF0\x9F\x92\x80\xF0\x9F\x92\x80\xF0\x9F\x92\x80%c[0m\n", 27, path, 27); // red, utf-8 skulls
+    printf("%c[31m%s === REMOVED ===%c[0m\n", 27, path, 27); // red, utf-8 skulls
     free(path);
     if (unlink(filename) != 0 || unlink(exFilename) != 0) {
       fatalError("failed to remove %s\n", filename);
@@ -162,9 +162,9 @@ backup_backupList(dir_entry_list_t* list)
 
       if (skip) {
 	if (skipFile) {
-	  printf("\xF0\x9F\x9A\xAB %c[1m%s \xE2\x80\x94\xE2\x80\x94\xE2\x80\x94SKIPPED\xE2\x80\x94\xE2\x80\x94\xE2\x80\x94 %c[0m\n", 27, path, 27); // utf-8 no entry bold
+	  printf("! %c[1m%s == SKIPPED == %c[0m\n", 27, path, 27); // utf-8 no entry bold
 	} else {
-	  printf("\xE2\x9C\x85 %s\n", path); // utf-8 tick
+	  printf("! %s\n", path); // utf-8 tick
 	}
       } else {
 	uint32_t protect;
@@ -193,7 +193,7 @@ backup_backupList(dir_entry_list_t* list)
 #else
 	printf("\r");
 #endif
-	printf("\xE2\x9C\x85 %s saving...done  \n", path); // utf-8 tick
+	printf("! %s saving...done  \n", path); // utf-8 tick
 	fflush(stdout);
       }
       free((void*)path);
@@ -218,7 +218,7 @@ backup_backupList(dir_entry_list_t* list)
 	exall_saveExAllData(entry, path);
 	free((void*)path);
       } else {
-	  printf("\xF0\x9F\x9A\xAB %c[1m%s \xE2\x80\x94\xE2\x80\x94\xE2\x80\x94SKIPPED\xE2\x80\x94\xE2\x80\x94\xE2\x80\x94 %c[0m\n", 27, path, 27); // utf-8 no entry bold
+	  printf("! %c[1m%s == SKIPPED == %c[0m\n", 27, path, 27); // utf-8 no entry bold
 	free((void*)path);
       }
 
@@ -294,7 +294,7 @@ static void
 backup_backupDir(const char* dir)
 {
   char* cwd = backup_pushDir(dir);
-  printf("\xE2\x9C\x85 %s\n", backup_currentDir); // utf-8 tick
+  printf("! %s\n", backup_currentDir); // utf-8 tick
   if (dir_process(backup_currentDir, backup_backupList) != 0) {
     fatalError("unable to read %s", dir);
   }

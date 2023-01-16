@@ -208,9 +208,9 @@ restore_printProgress(const char* filename, struct timeval* start, uint32_t tota
 #endif
   fflush(stdout);
   if (percentage >= 100) {
-    printf("\xE2\x9C\x85 "); // utf-8 tick
+    printf("! "); // utf-8 tick
   } else {
-    printf("\xE2\x8C\x9B "); // utf-8 hourglass
+    printf("& "); // utf-8 hourglass
   }
 
   printf("%s %3d%% ", filename, percentage);
@@ -247,7 +247,7 @@ restore_operation(const char* filename, void* data)
     switch (update) {
     case UPDATE_CREATE:
     case UPDATE_EXALL:
-      printf("\xE2\x8C\x9B %s restoring...", path); // utf-8 hourglass
+      printf("& %s restoring...", path); // utf-8 hourglass
       fflush(stdout);
 
       if (restore_updateExAll(filename, path) != 0) {
@@ -259,12 +259,12 @@ restore_operation(const char* filename, void* data)
 #else
 	printf("\r");
 #endif
-	printf("\xE2\x9C\x85 %s restoring...done\n", path); // utf-8 tick
+	printf("! %s restoring...done\n", path); // utf-8 tick
       break;
     case UPDATE_NOUPDATE:
 
       if (!restore_quiet) {
-	printf("\xE2\x9C\x85 %s\n", path); // utf-8 tick
+	printf("! %s\n", path); // utf-8 tick
       }
       break;
     }
@@ -272,7 +272,7 @@ restore_operation(const char* filename, void* data)
     switch (update) {
     case UPDATE_CREATE:
     case UPDATE_EXALL:
-      printf("\xE2\x8C\x9B %s restoring...", path); // utf-8 hourglass
+      printf("& %s restoring...", path); // utf-8 hourglass
       fflush(stdout);
       char updateMessage[PATH_MAX];
       snprintf(updateMessage, sizeof(updateMessage), "%s restoring...", path);
@@ -293,7 +293,7 @@ restore_operation(const char* filename, void* data)
 #else
 	printf("\r");
 #endif
-	printf("\xE2\x9C\x85 %s restoring...done  \n", path); // utf-8 tick
+	printf("! %s restoring...done  \n", path); // utf-8 tick
       break;
     case UPDATE_NOUPDATE:
 
@@ -304,7 +304,7 @@ restore_operation(const char* filename, void* data)
       }
 
       if (!restore_quiet) {
-	printf("\xE2\x9C\x85 %s\n", path); // utf-8 tick
+	printf("! %s\n", path); // utf-8 tick
       }
       break;
     }
