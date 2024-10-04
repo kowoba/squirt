@@ -21,10 +21,10 @@ MINGW_LIBS=-lws2_32 -liconv -lreadline
 
 ifeq ($(PLATFORM),osx)
 # OSX
-CC=gcc -I/opt/homebrew/opt/readline/include/ -I/opt/homebrew/opt/libiconv/include
+CC=gcc -I/usr/local/opt/readline/include/ -I/usr/local/opt/libiconv/include
 STATIC_ANALYZE=-fsanitize=address -fsanitize=undefined
 ifeq ($(RELEASE),true)
-LIBS=-L/opt/homebrew/opt/readline/lib/ -L/opt/homebrew/opt/libiconv/lib -liconv -lcharset -ltermcap -lreadline
+LIBS=-L/usr/local/opt/readline/lib/ -L/usr/local/opt/libiconv/lib -liconv -lcharset -ltermcap -lreadline
 else
 LIBS=-liconv -ltermcap -lreadline
 endif
