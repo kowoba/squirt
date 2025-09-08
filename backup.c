@@ -144,7 +144,8 @@ backup_pruneFiles(const char* filename, void* data)
     char exFilename[PATH_MAX];
     snprintf(exFilename, sizeof(exFilename), "%s%s", SQUIRT_EXALL_INFO_DIR_NAME, filename);
     char* path = backup_fullPath(filename);
-    printf("%c[31m%s \xF0\x9F\x92\x80\xF0\x9F\x92\x80\xF0\x9F\x92\x80 REMOVED \xF0\x9F\x92\x80\xF0\x9F\x92\x80\xF0\x9F\x92\x80%c[0m\n", 27, path, 27); // red, utf-8 skulls
+/*  printf("%c[31m%s \xF0\x9F\x92\x80\xF0\x9F\x92\x80\xF0\x9F\x92\x80 REMOVED \xF0\x9F\x92\x80\xF0\x9F\x92\x80\xF0\x9F\x92\x80%c[0m\n", 27, path, 27); // red, utf-8 skulls */
+    printf("%c[31m%s === REMOVED ===%c[0m\n", 27, path, 27); // red, ascii skulls
     free(path);
     
     struct stat st;
@@ -274,11 +275,14 @@ backup_backupList(dir_entry_list_t* list)
 
       if (skip) {
 	if (skipFile) {
-	  printf("\xF0\x9F\x9A\xAB %c[1m%s \xE2\x80\x94\xE2\x80\x94\xE2\x80\x94SKIPPED\xE2\x80\x94\xE2\x80\x94\xE2\x80\x94 %c[0m\n", 27, path, 27); // utf-8 no entry bold
+/*  printf("\xF0\x9F\x9A\xAB %c[1m%s \xE2\x80\x94\xE2\x80\x94\xE2\x80\x94SKIPPED\xE2\x80\x94\xE2\x80\x94\xE2\x80\x94 %c[0m\n", 27, path, 27); // utf-8 no entry bold */
+    printf("! %c[1m%s ***SKIPPED*** %c[0m\n", 27, path, 27); // ascii no entry bold
 	} else if (skipReason == 2) {
-	  printf("\xE2\x9C\x85 %s (CRC verified - no change)\n", path); // utf-8 tick with CRC verification message
+/*  printf("\xE2\x9C\x85 %s (CRC verified - no change)\n", path); // utf-8 tick with CRC verification message */
+	  printf("! %s\n", path); // ascii tick
 	} else {
-	  printf("\xE2\x9C\x85 %s\n", path); // utf-8 tick
+/*  printf("\xE2\x9C\x85 %s\n", path); // utf-8 tick */
+	  printf("! %s\n", path); // ascii tick
 	}
       } else {
 	uint32_t protect;
@@ -315,7 +319,8 @@ backup_backupList(dir_entry_list_t* list)
 #else
 	  printf("\r");
 #endif
-	  printf("\xE2\x9C\x85 %s saving...done (CRC OK)\n", path); // utf-8 tick with CRC verification
+/*  printf("\xE2\x9C\x85 %s saving...done (CRC OK)\n", path); // utf-8 tick with CRC verification */
+	  printf("! %s saving...done  (CRC OK)\n", path); // ascii tick with CRC verification
 	} else {
 	  // No CRC verification, just show completion message
 #ifndef _WIN32
@@ -323,7 +328,8 @@ backup_backupList(dir_entry_list_t* list)
 #else
 	  printf("\r");
 #endif
-	  printf("\xE2\x9C\x85 %s saving...done  \n", path); // utf-8 tick
+/*  printf("\xE2\x9C\x85 %s saving...done  \n", path); // utf-8 tick */
+	  printf("! %s saving...done  \n", path); // ascii tick
 	}
 	fflush(stdout);
       }
@@ -349,7 +355,8 @@ backup_backupList(dir_entry_list_t* list)
 	exall_saveExAllData(entry, path);
 	free((void*)path);
       } else {
-	  printf("\xF0\x9F\x9A\xAB %c[1m%s \xE2\x80\x94\xE2\x80\x94\xE2\x80\x94SKIPPED\xE2\x80\x94\xE2\x80\x94\xE2\x80\x94 %c[0m\n", 27, path, 27); // utf-8 no entry bold
+/*  printf("\xF0\x9F\x9A\xAB %c[1m%s \xE2\x80\x94\xE2\x80\x94\xE2\x80\x94SKIPPED\xE2\x80\x94\xE2\x80\x94\xE2\x80\x94 %c[0m\n", 27, path, 27); // utf-8 no entry bold */
+	  printf("[ ] SKIPPED\n", 27, path, 27); // ascii no entry bold
 	free((void*)path);
       }
 
@@ -425,7 +432,8 @@ static void
 backup_backupDir(const char* dir)
 {
   char* cwd = backup_pushDir(dir);
-  printf("\xE2\x9C\x85 %s\n", backup_currentDir); // utf-8 tick
+/* printf("\xE2\x9C\x85 %s\n", backup_currentDir); // utf-8 tick */
+  printf("! %s\n", backup_currentDir); // ascii tick
   if (dir_process(backup_currentDir, backup_backupList) != 0) {
     fatalError("unable to read %s", dir);
   }

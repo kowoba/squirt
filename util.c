@@ -468,9 +468,11 @@ util_printProgress(const char* filename, struct timeval* start, uint32_t total, 
 #endif
   fflush(stdout);
   if (percentage >= 100) {
-    printf("\xE2\x9C\x85 "); // utf-8 tick
+/*  printf("\xE2\x9C\x85 "); // utf-8 tick */
+    printf("! "); // ascii tick
   } else {
-    printf("\xE2\x8C\x9B "); // utf-8 hourglass
+/*  printf("\xE2\x8C\x9B "); // utf-8 hourglass */
+    printf("& "); // ascii hourglass
   }
 
   printf("%3d%% [", percentage);

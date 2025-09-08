@@ -298,9 +298,11 @@ restore_printProgress(const char* filename, struct timeval* start, uint32_t tota
 #endif
   fflush(stdout);
   if (percentage >= 100) {
-    printf("\xE2\x9C\x85 "); // utf-8 tick
+/*  printf("\xE2\x9C\x85 "); // utf-8 tick */
+    printf("! "); // ascii tick
   } else {
-    printf("\xE2\x8C\x9B "); // utf-8 hourglass
+/*  printf("\xE2\x8C\x9B "); // utf-8 hourglass */
+    printf("& "); // ascii hourglass
   }
 
   printf("%s %3d%% ", filename, percentage);
@@ -356,7 +358,8 @@ restore_operation(const char* filename, void* data)
     switch (update) {
     case UPDATE_CREATE:
     case UPDATE_EXALL:
-      printf("\xE2\x8C\x9B %s restoring...", path); // utf-8 hourglass
+/*    printf("\xE2\x8C\x9B %s restoring...", path); // utf-8 hourglass */
+      printf("& %s restoring...", path); // ascii hourglass
       fflush(stdout);
 
       if (restore_updateExAll(originalFilename, originalPath) != 0) {
@@ -368,12 +371,14 @@ restore_operation(const char* filename, void* data)
 #else
 	printf("\r");
 #endif
-	printf("\xE2\x9C\x85 %s restoring...done\n", path); // utf-8 tick
+/* printf("\xE2\x9C\x85 %s restoring...done\n", path); // utf-8 tick */
+	printf("& %s restoring...done\n", path); // ascii tick
       break;
     case UPDATE_NOUPDATE:
 
       if (!restore_quiet) {
-	printf("\xE2\x9C\x85 %s\n", path); // utf-8 tick
+/*	printf("\xE2\x9C\x85 %s\n", path); // utf-8 tick */
+	printf("! %s\n", path); // ascii tick
       }
       break;
     }
@@ -381,7 +386,8 @@ restore_operation(const char* filename, void* data)
     switch (update) {
     case UPDATE_CREATE:
     case UPDATE_EXALL:
-      printf("\xE2\x8C\x9B %s restoring...", path); // utf-8 hourglass
+/*    printf("\xE2\x8C\x9B %s restoring...", path); // utf-8 hourglass */
+      printf("& %s restoring...", path); // ascii hourglass
       fflush(stdout);
       char updateMessage[PATH_MAX];
       sprintf(updateMessage, "\xE2\x9C\x85 %s updating...", path);
@@ -426,9 +432,11 @@ restore_operation(const char* filename, void* data)
 	printf("\r");
 #endif
 	if (restore_crcVerify) {
-	  printf("\xE2\x9C\x85 %s restoring...done (CRC OK)\n", path); // utf-8 tick with CRC verification
+/*	printf("\xE2\x9C\x85 %s restoring...done (CRC OK)\n", path); // utf-8 tick with CRC verification */
+	  printf("! %s restoring...done (CRC OK)\n", path); // ascii tick with CRC verification
 	} else {
-	  printf("\xE2\x9C\x85 %s restoring...done\n", path); // utf-8 tick
+/*  printf("\xE2\x9C\x85 %s restoring...done\n", path); // utf-8 tick */
+	  printf("! %s restoring...done\n", path); // utf-8 tick
 	}
       break;
     case UPDATE_NOUPDATE:
@@ -437,10 +445,12 @@ restore_operation(const char* filename, void* data)
 	int crcResult = backup_doCrcVerify(path);
 	if (crcResult == 1) {
 	  // CRC mismatch - file needs to be re-uploaded
-	  printf("\xE2\x9D\x8C CRC32 mismatch detected for %s - file will be re-uploaded\n", path);
+/*  printf("\xE2\x9D\x8C CRC32 mismatch detected for %s - file will be re-uploaded\n", path); // utf-8 */
+	  printf("?! CRC32 mismatch detected for %s - file will be re-uploaded\n", path);
 	  
 	  // Change update status to force re-upload
-	  printf("\xE2\x8C\x9B %s restoring...", path); // utf-8 hourglass
+/*  printf("\xE2\x8C\x9B %s restoring...", path); // utf-8 hourglass */
+	  printf("& %s restoring...", path); // ascii hourglass
 	  fflush(stdout);
 	  
 	  // Perform upload with retry logic
@@ -479,18 +489,21 @@ restore_operation(const char* filename, void* data)
 #else
 	  printf("\r");
 #endif
-	  printf("\xE2\x9C\x85 %s restoring...done (CRC OK)\n", path); // utf-8 tick with CRC verification
+/*  printf("\xE2\x9C\x85 %s restoring...done (CRC OK)\n", path); // utf-8 tick with CRC verification */
+	  printf("! %s restoring...done (CRC OK)\n", path); // ascii tick with CRC verification
 	} else if (crcResult == 2) {
 	  fatalError("CRC32 verification failed - remote file not found: %s", path);
 	} else {
 	  // CRC verification passed - file is identical
 	  if (!restore_quiet) {
-	    printf("\xE2\x9C\x85 %s (CRC verified - no change)\n", path); // utf-8 tick with CRC verification message
+/*    printf("\xE2\x9C\x85 %s (CRC verified - no change)\n", path); // utf-8 tick with CRC verification message */
+	    printf("! %s (CRC verified - no change)\n", path); // ascii tick with CRC verification message
 	  }
 	}
       } else {
 	if (!restore_quiet) {
-	  printf("\xE2\x9C\x85 %s\n", path); // utf-8 tick
+/*  printf("\xE2\x9C\x85 %s\n", path); // utf-8 tick */
+	  printf("! %s\n", path); // ascii tick
 	}
       }
       break;
