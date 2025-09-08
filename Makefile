@@ -30,7 +30,6 @@ WARNINGS=-Wno-error=format -Wno-format -Wall -Werror -Wall -Wpedantic -Wno-unkno
 SQUIRT_OBJS=$(addprefix build/obj/, $(SQUIRT_SRCS:.c=.o))
 SUM_OBJS=$(addprefix build/obj/, $(SUM_SRCS:.c=.o))
 HOST_CLIENT_APPS=$(addprefix build/, $(CLIENT_APPS))
-AMIGA_APPS=build/amiga/squirtd build/amiga/ssum build/amiga/skill build/amiga/sps
 
 RELEASE_VERSION=v0.4
 RELEASE_DIR=release/squirt
@@ -43,7 +42,7 @@ RELEASE_LINUX_ASSET=squirt-linux-x86-$(RELEASE_VERSION).tgz
 RELEASE_WIN32_ASSET=squirt-w32-x86-64-$(RELEASE_VERSION).zip
 RELEASE_AMIGA_ASSET=squirt-amiga-$(RELEASE_VERSION).lha
 
-all: $(HOST_CLIENT_APPS) $(AMIGA_APPS)
+all: $(HOST_CLIENT_APPS)
 
 release: all mingw musl
 	@rm -rf release
@@ -61,7 +60,6 @@ release: all mingw musl
 	@cp $(HOST_CLIENT_APPS) $(RELEASE_DIR)/$(RELEASE_OSX_DIR)
 	@cp $(MINGW_APPS) $(RELEASE_DIR)/$(RELEASE_W32_DIR)
 	@cp $(MUSL_APPS) $(RELEASE_DIR)/$(RELEASE_LINUX_DIR)
-	@cp $(AMIGA_APPS) $(RELEASE_DIR)/$(RELEASE_AMIGA_DIR)
 	@echo "\n###### Creating OSX Release ##########\n"
 	@cd $(RELEASE_DIR) && tar zcfv ../$(RELEASE_OSX_ASSET) $(RELEASE_OSX_DIR)
 	@echo "\n\n###### Creating Linux Release ######\n"
